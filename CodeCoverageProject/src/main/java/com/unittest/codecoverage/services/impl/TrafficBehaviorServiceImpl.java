@@ -2,6 +2,7 @@ package com.unittest.codecoverage.services.impl;
 
 import com.unittest.codecoverage.exceptions.BehaviorException;
 import com.unittest.codecoverage.models.Footpassenger;
+import com.unittest.codecoverage.models.StreetDirectionFlow;
 import com.unittest.codecoverage.models.Traffic;
 import com.unittest.codecoverage.models.TrafficLigth;
 import com.unittest.codecoverage.services.TrafficBehaviorService;
@@ -22,6 +23,12 @@ public class TrafficBehaviorServiceImpl implements TrafficBehaviorService {
 				!currentFootpassengerBehavior.lookedToTheLeft() && 
 				!currentFootpassengerBehavior.lookedToTheRight()) {
 			throw new BehaviorException("You should be more careful");
+		}
+
+		if(currentTrafic.getStreetDirectionFlow() == StreetDirectionFlow.TWO_WAY &&
+				!currentFootpassengerBehavior.lookedToTheLeft() &&
+				!currentFootpassengerBehavior.lookedToTheRight()) {
+			throw new BehaviorException("What are you doing man?");
 		}
 		
 	}

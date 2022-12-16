@@ -1,5 +1,6 @@
 package com.unittest.codecoverage.service;
 
+import com.unittest.codecoverage.models.StreetDirectionFlow;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,27 @@ public class TrafficBehaviorServiceTest {
 			.isInstanceOf(BehaviorException.class)
 			.hasMessage("You should be more careful");
 		
+	}
+
+	@Test
+	public void testTraffic()
+	{
+		Traffic currentTraffic = new Traffic();
+		currentTraffic.setIntenseCarTraffic(false);
+		currentTraffic.setMinSpeedAllowed((short) 30);
+		currentTraffic.setMaxSpeedAllowed((short) 60);
+		currentTraffic.setStreetDirectionFlow(StreetDirectionFlow.TWO_WAY);
+
+		Footpassenger currentFootPassengerBehavior = new Footpassenger();
+		currentFootPassengerBehavior.setCrossedTheRoad(true);
+		currentFootPassengerBehavior.setLookedToTheLeft(false);
+		currentFootPassengerBehavior.setLookedToTheRight(false);
+		currentFootPassengerBehavior.setCrossedTrafficLigth(TrafficLigth.GREEN);
+
+		Assertions.assertThatThrownBy(() -> trafficBehaviorService.footpassengerCrossTheStreet(currentTraffic, currentFootPassengerBehavior))
+				.isInstanceOf(BehaviorException.class)
+				.hasMessageContaining("What are you doing man?");
+
 	}
 
 }
