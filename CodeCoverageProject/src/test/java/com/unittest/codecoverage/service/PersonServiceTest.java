@@ -112,5 +112,35 @@ public class PersonServiceTest {
 				.hasFieldOrPropertyWithValue("errors", expectedErrors)
 				.hasMessage(expectedMessage);
 	}
+	@Test
+	public void UpdatePerson() {
+		List<String> expectedErrors = Lists.newArrayList("Gender is required");
+		String expectedMessage = String.join(";", expectedErrors);
+
+		Person person = new Person();
+		person.setName("Kambiz");
+		person.setAge(23);
+		person.setGender(Gender.M);
+
+		person.setGender(null);
+
+		assertThatThrownBy(() -> service.update(person))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+
+	}
+	@Test
+	public void TestGetPerson() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+
+
+		assertThatThrownBy(() -> service.get(""))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
 
 }
